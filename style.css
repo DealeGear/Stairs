@@ -145,7 +145,7 @@ body {
 }
 
 .btn-primary, .btn-secondary, .btn-danger {
-    padding: 0.75rem 1.5rem;
+    padding: 0.5rem 1rem; /* Reduzindo o padding */
     border: none;
     border-radius: var(--radius);
     font-size: 1rem;
@@ -225,7 +225,7 @@ body {
 .nav-item {
     display: flex;
     align-items: center;
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 1.0rem;
     color: var(--text-color);
     text-decoration: none;
     transition: var(--transition);
@@ -259,8 +259,14 @@ body {
 }
 
 .project-info h2 {
-    font-size: 1.5rem;
+    font-size: 1.25rem; /* Reduzido de 1.5rem para 1.25rem */
     font-weight: 600;
+}
+
+.project-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
 }
 
 .project-actions {
@@ -353,7 +359,7 @@ input:checked + .slider:before {
 }
 
 .view-header h2 {
-    font-size: 1.75rem;
+    font-size: 1.5rem; /* Reduzido de 1.75rem para 1.5rem */
     font-weight: 600;
 }
 
@@ -664,6 +670,74 @@ input:checked + .slider:before {
     border-radius: 0 var(--radius) var(--radius) 0;
 }
 
+/* Notificações */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: var(--transition);
+    max-width: 400px;
+}
+
+.notification.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.notification-success {
+    background-color: rgba(16, 185, 129, 0.9);
+    color: white;
+}
+
+.notification-error {
+    background-color: rgba(239, 68, 68, 0.9);
+    color: white;
+}
+
+.notification-warning {
+    background-color: rgba(245, 158, 11, 0.9);
+    color: white;
+}
+
+.notification-info {
+    background-color: rgba(99, 102, 241, 0.9);
+    color: white;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.notification-content i {
+    font-size: 1.25rem;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--border-color);
+}
+
+.empty-state p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
     .sidebar {
@@ -726,4 +800,32 @@ input:checked + .slider:before {
     .modal-actions button {
         width: 100%;
     }
+    
+    .notification {
+        left: 20px;
+        right: 20px;
+        max-width: none;
+    }
 }
+
+.project-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-color);
+    cursor: default;
+    transition: var(--transition);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius);
+}
+
+.project-title.editable {
+    cursor: text;
+    background-color: var(--secondary-color);
+    outline: 2px solid var(--primary-color);
+}
+
+.project-title.editable:focus {
+    outline: 2px solid var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+

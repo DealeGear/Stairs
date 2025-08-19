@@ -18,9 +18,9 @@ const i18n = {
             // Topbar
             "project.noProject": "Nenhum Projeto Aberto",
             "topbar.save": "Salvar",
-            "topbar.reedit": "Reeditar",
+            "topbar.reedit": "Renomear",
             "topbar.delete": "Excluir",
-            "topbar.exportPDF": "Exportar PDF",
+            "topbar.exportPDF": "Exportar",
             "topbar.share": "Compartilhar",
             
             // Projetos
