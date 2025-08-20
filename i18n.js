@@ -234,6 +234,7 @@ const i18n = {
             "share.copy": "Copiar",
             "share.close": "Cerrar"
         }
+        
     },
     
     // Inicializar o módulo

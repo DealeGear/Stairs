@@ -372,70 +372,22 @@ function saveProject() {
         });
 }
 
-// ... (código anterior permanece igual)
-
 function reeditProject() {
     if (!currentProject) return;
     
-    // Tornar o nome do projeto editável
-    const projectNameElement = document.getElementById('project-name');
-    projectNameElement.contentEditable = true;
-    projectNameElement.classList.add('editable');
-    projectNameElement.focus();
+    // Habilitar campos para edição
+    document.getElementById('project-name').contentEditable = true;
+    document.getElementById('project-name').focus();
     
-    // Selecionar todo o texto
-    const range = document.createRange();
-    range.selectNodeContents(projectNameElement);
-    const selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
-    
-    // Habilitar outros campos para edição
     document.getElementById('investment-select').disabled = false;
     
     document.querySelectorAll('.step-input').forEach(input => {
         input.disabled = false;
     });
     
-    // Adicionar evento para salvar quando pressionar Enter
-    projectNameElement.addEventListener('keydown', handleProjectNameEdit);
-    
-    // Adicionar evento para salvar quando perder o foco
-    projectNameElement.addEventListener('blur', saveProjectName);
-    
     updateActionButtons();
     showNotification('Modo de edição ativado', 'info');
 }
-
-function handleProjectNameEdit(e) {
-    if (e.key === 'Enter') {
-        e.preventDefault();
-        saveProjectName();
-    }
-}
-
-function saveProjectName() {
-    const projectNameElement = document.getElementById('project-name');
-    
-    // Remover eventos temporários
-    projectNameElement.removeEventListener('keydown', handleProjectNameEdit);
-    projectNameElement.removeEventListener('blur', saveProjectName);
-    
-    // Desabilitar edição
-    projectNameElement.contentEditable = false;
-    projectNameElement.classList.remove('editable');
-    
-    // Atualizar nome do projeto se houve alteração
-    if (currentProject && projectNameElement.textContent.trim() !== '') {
-        currentProject.nome = projectNameElement.textContent.trim();
-        showNotification('Nome do projeto atualizado!', 'success');
-    } else if (projectNameElement.textContent.trim() === '') {
-        // Reverter para o nome original se estiver vazio
-        projectNameElement.textContent = currentProject ? currentProject.nome : i18n.t('project.noProject');
-    }
-}
-
-// ... (restante do código permanece igual)
 
 function confirmDeleteProject() {
     if (!currentProject) return;
@@ -604,7 +556,7 @@ function confirmDealeGearRedirect() {
         i18n.t('modal.dealegearTitle'),
         i18n.t('modal.dealegearMessage'),
         () => {
-            window.open('https://dealegear.com.br', '_blank');
+            window.open('https://dealegear.com', '_blank');
         }
     );
 }
