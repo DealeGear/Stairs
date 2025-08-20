@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stairs - Planejamento Estruturado de Projetos</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Barra Lateral Esquerda -->
+        <aside id="sidebar">
+            <div class="logo">
+                <h1>Stairs</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" id="new-project-btn"><i class="fas fa-plus"></i> <span data-i18n="sidebar.newProject">Novo Projeto</span></a></li>
+                    <li><a href="#" id="my-projects-btn"><i class="fas fa-folder"></i> <span data-i18n="sidebar.myProjects">Meus Projetos</span></a></li>
+                    <li class="submenu">
+                        <a href="#" id="templates-btn"><i class="fas fa-file-alt"></i> <span data-i18n="sidebar.templates">Templates</span> <i class="fas fa-chevron-down"></i></a>
+                        <ul class="submenu-content">
+                            <li><a href="#" data-template-level="low"><i class="fas fa-dollar-sign"></i> <span data-i18n="sidebar.lowInvestment">Baixo Investimento</span></a></li>
+                            <li><a href="#" data-template-level="medium"><i class="fas fa-dollar-sign"></i> <span data-i18n="sidebar.mediumInvestment">Médio Investimento</span></a></li>
+                            <li><a href="#" data-template-level="high"><i class="fas fa-dollar-sign"></i> <span data-i18n="sidebar.highInvestment">Alto Investimento</span></a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" id="delete-project-btn"><i class="fas fa-trash"></i> <span data-i18n="sidebar.deleteProject">Excluir Projeto</span></a></li>
+                    <li><a href="#" id="test-hypothesis-btn"><i class="fas fa-flask"></i> <span data-i18n="sidebar.testHypothesis">Testar Hipótese</span></a></li>
+                    <li><a href="#" id="critique-project-btn"><i class="fas fa-comments"></i> <span data-i18n="sidebar.critiqueProject">Criticar Projeto</span></a></li>
+                    <li><a href="#" id="manage-project-btn"><i class="fas fa-tasks"></i> <span data-i18n="sidebar.manageProject">Gerenciar Projeto</span></a></li>
+                    <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> <span data-i18n="sidebar.logout">Sair</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Conteúdo Principal -->
+        <main>
+            <!-- Barra Superior -->
+            <header>
+                <div class="project-info">
+                    <h2 id="current-project-name" data-i18n="header.noProject">Nenhum projeto selecionado</h2>
+                    <button id="rename-project-btn" class="icon-btn" title="Renomear Projeto">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+                <div class="actions">
+                    <button id="save-btn" class="btn" data-i18n="header.save">Salvar</button>
+                    <button id="reedit-btn" class="btn" data-i18n="header.reedit">Reeditar</button>
+                    <button id="export-pdf-btn" class="btn" data-i18n="header.exportPDF">Exportar PDF</button>
+                    <button id="share-btn" class="btn" data-i18n="header.share">Compartilhar</button>
+                    <div class="theme-toggle">
+                        <i class="fas fa-sun"></i>
+                        <label class="switch">
+                            <input type="checkbox" id="theme-switch">
+                            <span class="slider"></span>
+                        </label>
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <select id="language-select" class="language-select">
+                        <option value="pt">PT</option>
+                        <option value="en">EN</option>
+                        <option value="es">ES</option>
+                    </select>
+                </div>
+            </header>
+
+            <!-- Área Central -->
+            <div id="content-area">
+                <div id="project-blocks" class="project-blocks">
+                    <!-- Os blocos do projeto serão inseridos aqui dinamicamente -->
+                </div>
+                <div id="no-project" class="no-project">
+                    <div class="no-project-content">
+                        <i class="fas fa-folder-open"></i>
+                        <h3 data-i18n="noProject.title">Nenhum projeto selecionado</h3>
+                        <p data-i18n="noProject.description">Crie um novo projeto ou selecione um existente para começar.</p>
+                        <button id="create-project-btn" class="btn" data-i18n="noProject.createButton">Criar Novo Projeto</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Login/Cadastro -->
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="auth-container">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login" data-i18n="auth.login">Login</button>
+                    <button class="auth-tab" data-tab="register" data-i18n="auth.register">Cadastro</button>
+                </div>
+                <div id="login-form" class="auth-form active">
+                    <h2 data-i18n="auth.loginTitle">Entre na sua conta</h2>
+                    <form id="login-form-element">
+                        <div class="form-group">
+                            <label for="login-email" data-i18n="auth.email">Email</label>
+                            <input type="email" id="login-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password" data-i18n="auth.password">Senha</label>
+                            <input type="password" id="login-password" required>
+                        </div>
+                        <div class="form-group forgot-password">
+                            <a href="#" id="forgot-password-link" data-i18n="auth.forgotPassword">Esqueceu a senha?</a>
+                        </div>
+                        <button type="submit" class="btn" data-i18n="auth.loginButton">Entrar</button>
+                    </form>
+                    <div class="divider">
+                        <span data-i18n="auth.or">ou</span>
+                    </div>
+                    <button id="google-login-btn" class="btn google-btn">
+                        <i class="fab fa-google"></i> <span data-i18n="auth.loginWithGoogle">Entrar com Google</span>
+                    </button>
+                </div>
+                <div id="register-form" class="auth-form">
+                    <h2 data-i18n="auth.registerTitle">Crie sua conta</h2>
+                    <form id="register-form-element">
+                        <div class="form-group">
+                            <label for="register-name" data-i18n="auth.name">Nome</label>
+                            <input type="text" id="register-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email" data-i18n="auth.email">Email</label>
+                            <input type="email" id="register-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password" data-i18n="auth.password">Senha</label>
+                            <input type="password" id="register-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-confirm-password" data-i18n="auth.confirmPassword">Confirmar Senha</label>
+                            <input type="password" id="register-confirm-password" required>
+                        </div>
+                        <button type="submit" class="btn" data-i18n="auth.registerButton">Cadastrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Recuperação de Senha -->
+    <div id="forgot-password-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 data-i18n="forgotPassword.title">Recuperar Senha</h2>
+            <p data-i18n="forgotPassword.description">Digite seu email para receber um link de recuperação de senha.</p>
+            <form id="forgot-password-form">
+                <div class="form-group">
+                    <label for="forgot-password-email" data-i18n="auth.email">Email</label>
+                    <input type="email" id="forgot-password-email" required>
+                </div>
+                <button type="submit" class="btn" data-i18n="forgotPassword.sendButton">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Novo Projeto -->
+    <div id="new-project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 data-i18n="newProject.title">Novo Projeto</h2>
+            <form id="new-project-form">
+                <div class="form-group">
+                    <label for="project-name" data-i18n="newProject.name">Nome do Projeto</label>
+                    <input type="text" id="project-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="project-template" data-i18n="newProject.template">Template</label>
+                    <select id="project-template">
+                        <option value="blank" data-i18n="newProject.blankTemplate">Em Branco</option>
+                        <option value="low" data-i18n="newProject.lowInvestment">Baixo Investimento</option>
+                        <option value="medium" data-i18n="newProject.mediumInvestment">Médio Investimento</option>
+                        <option value="high" data-i18n="newProject.highInvestment">Alto Investimento</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn" data-i18n="newProject.createButton">Criar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Meus Projetos -->
+    <div id="my-projects-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 data-i18n="myProjects.title">Meus Projetos</h2>
+            <div id="projects-list" class="projects-list">
+                <!-- Lista de projetos será inserida aqui dinamicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Excluir Projeto -->
+    <div id="delete-project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 data-i18n="deleteProject.title">Excluir Projeto</h2>
+            <p data-i18n="deleteProject.confirmation">Tem certeza de que deseja excluir este projeto? Esta ação não pode ser desfeita.</p>
+            <div class="modal-actions">
+                <button id="cancel-delete-btn" class="btn secondary" data-i18n="deleteProject.cancel">Cancelar</button>
+                <button id="confirm-delete-btn" class="btn danger" data-i18n="deleteProject.delete">Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Testar Hipótese -->
+    <div id="test-hypothesis-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 data-i18n="testHypothesis.title">Testar Hipótese</h2>
+            <p data-i18n="testHypothesis.description">Descreva a hipótese que você deseja testar:</p>
+            <form id="test-hypothesis-form">
+                <div class="form-group">
+                    <label for="hypothesis-description" data-i18n="testHypothesis.hypothesis">Hipótese</label>
+                    <textarea id="hypothesis-description" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn" data-i18n="testHypothesis.testButton">Testar</button>
+            </form>
+            <div id="hypothesis-result" class="result-container">
+                <!-- Resultado da análise será inserido aqui -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Criticar Projeto -->
+    <div id="critique-project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 data-i18n="critiqueProject.title">Criticar Projeto</h2>
+            <p data-i18n="critiqueProject.description">A IA analisará seu projeto e fornecerá feedback construtivo.</p>
+            <button id="analyze-project-btn" class="btn" data-i18n="critiqueProject.analyzeButton">Analisar Projeto</button>
+            <div id="critique-result" class="result-container">
+                <!-- Resultado da análise será inserido aqui -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Gerenciar Projeto -->
+    <div id="manage-project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 data-i18n="manageProject.title">Gerenciar Projeto</h2>
+            <div class="tabs">
+                <button class="tab active" data-tab="tasks" data-i18n="manageProject.tasks">Tarefas</button>
+                <button class="tab" data-tab="team" data-i18n="manageProject.team">Equipe</button>
+                <button class="tab" data-tab="timeline" data-i18n="manageProject.timeline">Cronograma</button>
+            </div>
+            <div id="tasks-tab" class="tab-content active">
+                <h3 data-i18n="manageProject.assignTasks">Atribuir Tarefas</h3>
+                <div id="tasks-list" class="tasks-list">
+                    <!-- Lista de tarefas será inserida aqui dinamicamente -->
+                </div>
+                <button id="add-task-btn" class="btn" data-i18n="manageProject.addTask">Adicionar Tarefa</button>
+            </div>
+            <div id="team-tab" class="tab-content">
+                <h3 data-i18n="manageProject.teamMembers">Membros da Equipe</h3>
+                <div id="team-list" class="team-list">
+                    <!-- Lista de membros da equipe será inserida aqui dinamicamente -->
+                </div>
+                <button id="add-member-btn" class="btn" data-i18n="manageProject.addMember">Adicionar Membro</button>
+            </div>
+            <div id="timeline-tab" class="tab-content">
+                <h3 data-i18n="manageProject.projectTimeline">Cronograma do Projeto</h3>
+                <div id="timeline-container" class="timeline-container">
+                    <!-- Cronograma será inserido aqui dinamicamente -->
+                </div>
+                <button id="add-milestone-btn" class="btn" data-i18n="manageProject.addMilestone">Adicionar Marco</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Compartilhar Projeto -->
+    <div id="share-project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 data-i18n="shareProject.title">Compartilhar Projeto</h2>
+            <p data-i18n="shareProject.description">Compartilhe seu projeto com outras pessoas através do link abaixo:</p>
+            <div class="share-link-container">
+                <input type="text" id="share-link" readonly>
+                <button id="copy-link-btn" class="btn" data-i18n="shareProject.copyLink">Copiar Link</button>
+            </div>
+            <div class="share-permissions">
+                <h3 data-i18n="shareProject.permissions">Permissões</h3>
+                <div class="permission-options">
+                    <label>
+                        <input type="radio" name="permission" value="view" checked>
+                        <span data-i18n="shareProject.viewOnly">Apenas visualização</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="permission" value="edit">
+                        <span data-i18n="shareProject.canEdit">Pode editar</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificação -->
+    <div id="notification" class="notification">
+        <div class="notification-content">
+            <span id="notification-message"></span>
+            <button id="close-notification" class="close-notification">&times;</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="i18n.js"></script>
+    <script src="darkmode.js"></script>
+    <script src="auth.js"></script>
+    <script src="db.js"></script>
+    <script src="ai.js"></script>
+    <script src="gerenciar.js"></script>
+    <script src="pdf.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
