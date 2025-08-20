@@ -9,6 +9,7 @@ const i18n = {
             // Sidebar
             "sidebar.newProject": "Novo Projeto",
             "sidebar.myProjects": "Meus Projetos",
+            "sidebar.delete": "Excluir Projeto",
             "sidebar.testHypothesis": "Testar Hipótese",
             "sidebar.critiqueProject": "Criticar Projeto",
             "sidebar.manageProject": "Gerenciar Projeto",
@@ -19,7 +20,7 @@ const i18n = {
             "project.noProject": "Nenhum Projeto Aberto",
             "topbar.save": "Salvar",
             "topbar.reedit": "Renomear",
-            "topbar.delete": "Excluir",
+            
             "topbar.exportPDF": "Exportar",
             "topbar.share": "Compartilhar",
             

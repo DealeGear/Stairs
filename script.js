@@ -604,7 +604,7 @@ function confirmDealeGearRedirect() {
         i18n.t('modal.dealegearTitle'),
         i18n.t('modal.dealegearMessage'),
         () => {
-            window.open('https://dealegear.com', '_blank');
+            window.open('https://dealegear.com.br', '_blank');
         }
     );
 }
